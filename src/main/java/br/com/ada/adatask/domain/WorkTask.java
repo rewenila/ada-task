@@ -1,7 +1,5 @@
 package br.com.ada.adatask.domain;
 
-import java.time.LocalDateTime;
-
 public class WorkTask extends BaseTask {
 
     private String project;
@@ -16,8 +14,8 @@ public class WorkTask extends BaseTask {
     }
 
     @Override
-    public String getDecription() {
-        return super.getDecription();
+    public String getDescription() {
+        return super.getDescription();
     }
 
     @Override

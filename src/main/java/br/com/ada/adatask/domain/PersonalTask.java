@@ -1,7 +1,5 @@
 package br.com.ada.adatask.domain;
 
-import java.time.LocalDateTime;
-
 public class PersonalTask extends BaseTask {
 
     private String category;
@@ -12,13 +10,18 @@ public class PersonalTask extends BaseTask {
     }
 
     @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    @Override
     public String getTitle() {
         return super.getTitle();
     }
 
     @Override
-    public String getDecription() {
-        return super.getDecription();
+    public String getDescription() {
+        return super.getDescription();
     }
 
     @Override

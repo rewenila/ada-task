@@ -1,7 +1,5 @@
 package br.com.ada.adatask.domain;
 
-import java.time.LocalDateTime;
-
 public class StudyTask extends BaseTask {
 
     private String subject;
@@ -17,8 +15,8 @@ public class StudyTask extends BaseTask {
     }
 
     @Override
-    public String getDecription() {
-        return super.getDecription();
+    public String getDescription() {
+        return super.getDescription();
     }
 
     @Override
