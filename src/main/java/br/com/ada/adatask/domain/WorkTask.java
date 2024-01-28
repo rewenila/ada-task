@@ -27,10 +27,16 @@ public class WorkTask extends BaseTask {
         return project;
     }
 
+    public void setProject(String project) {
+        this.project = project;
+    }
+
     @Override
     public String toString() {
-        return "WorkTask{" +
-                "project='" + project + '\'' +
-                "} " + super.toString();
+        return super.getId() + ": Work Task; " +
+                "Title: " + super.getTitle() + ", " +
+                "Description: " + super.getDescription() + ", " +
+                "Deadline: " + super.getDeadline() + ", " +
+                "Project: " + project;
     }
 }

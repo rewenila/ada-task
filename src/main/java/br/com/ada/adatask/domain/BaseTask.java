@@ -33,13 +33,24 @@ public class BaseTask implements Task {
         return deadline;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
-        return "BaseTask{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+        return id + ": Regular Task; " +
+                "Title: " + title + ", " +
+                "Description: " + description + ", " +
+                "Deadline: " + deadline;
     }
 
 }

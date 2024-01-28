@@ -28,11 +28,16 @@ public class StudyTask extends BaseTask {
         return subject;
     }
 
-    @Override
-    public String toString() {
-        return "StudyTask{" +
-                "subject='" + subject + '\'' +
-                "} " + super.toString();
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
+    @Override
+    public String toString() {
+        return super.getId() + ": Study Task; " +
+                "Title: " + super.getTitle() + ", " +
+                "Description: " + super.getDescription() + ", " +
+                "Deadline: " + super.getDeadline() + ", " +
+                "Subject: " + subject;
+    }
 }

@@ -33,11 +33,24 @@ public class PersonalTask extends BaseTask {
         return category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return "PersonalTask{" +
-                "category='" + category + '\'' +
-                "} " + super.toString();
+        return super.getId() + ": Personal Task; " +
+                "Title: " + super.getTitle() + ", " +
+                "Description: " + super.getDescription() + ", " +
+                "Deadline: " + super.getDeadline() + ", " +
+                "Category: " + category;
     }
+
+/*    @Override
+    public String toString() {
+        return "Personal " +
+                super.toString() +
+                "Category: " + category + "\n";
+    }*/
 
 }
