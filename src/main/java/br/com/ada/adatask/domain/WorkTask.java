@@ -1,26 +1,15 @@
 package br.com.ada.adatask.domain;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class WorkTask extends BaseTask {
 
     private String project;
-    public WorkTask(String title, String description, String deadline, String project) {
-        super(title, description, deadline);
+    public WorkTask(String title, String description, LocalDate date, LocalTime time, String project) {
+        super(title, description, date, time);
         this.project = project;
-    }
-
-    @Override
-    public String getTitle() {
-        return super.getTitle();
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    @Override
-    public String getDeadline() {
-        return super.getDeadline();
     }
 
     public String getProject() {
@@ -33,10 +22,12 @@ public class WorkTask extends BaseTask {
 
     @Override
     public String toString() {
-        return super.getId() + ": Work Task; " +
-                "Title: " + super.getTitle() + ", " +
-                "Description: " + super.getDescription() + ", " +
-                "Deadline: " + super.getDeadline() + ", " +
-                "Project: " + project;
+        return "Task: " + super.getId() + "\n" +
+                "- Type: Personal Task\n" +
+                "- Title: " + super.getTitle() + "\n" +
+                "- Description: " + super.getDescription() + "\n" +
+                "- Date: " + super.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
+                "- Time: " + super.getTime().format(DateTimeFormatter.ofPattern("HH:mm")) + "\n" +
+                "- Project: " + project + "\n";
     }
 }

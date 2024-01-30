@@ -1,32 +1,21 @@
 package br.com.ada.adatask.domain;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class PersonalTask extends BaseTask {
 
     private String category;
 
-    public PersonalTask(String title, String description, String deadline, String category) {
-        super(title, description, deadline);
+    public PersonalTask(String title, String description, LocalDate date, LocalTime time, String category) {
+        super(title, description, date, time);
         this.category = category;
     }
 
     @Override
-    public Long getId() {
+    public Integer getId() {
         return super.getId();
-    }
-
-    @Override
-    public String getTitle() {
-        return super.getTitle();
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    @Override
-    public String getDeadline() {
-        return super.getDeadline();
     }
 
     public String getCategory() {
@@ -39,18 +28,13 @@ public class PersonalTask extends BaseTask {
 
     @Override
     public String toString() {
-        return super.getId() + ": Personal Task; " +
-                "Title: " + super.getTitle() + ", " +
-                "Description: " + super.getDescription() + ", " +
-                "Deadline: " + super.getDeadline() + ", " +
-                "Category: " + category;
+        return "Task: " + super.getId() + "\n" +
+                "- Type: Personal Task\n" +
+                "- Title: " + super.getTitle() + "\n" +
+                "- Description: " + super.getDescription() + "\n" +
+                "- Date: " + super.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
+                "- Time: " + super.getTime().format(DateTimeFormatter.ofPattern("HH:mm")) + "\n" +
+                "- Category: " + category + "\n";
     }
-
-/*    @Override
-    public String toString() {
-        return "Personal " +
-                super.toString() +
-                "Category: " + category + "\n";
-    }*/
 
 }

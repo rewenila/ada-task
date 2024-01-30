@@ -1,27 +1,16 @@
 package br.com.ada.adatask.domain;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class StudyTask extends BaseTask {
 
     private String subject;
 
-    public StudyTask(String title, String description, String deadline, String subject) {
-        super(title, description, deadline);
+    public StudyTask(String title, String description, LocalDate date, LocalTime time, String subject) {
+        super(title, description, date, time);
         this.subject = subject;
-    }
-
-    @Override
-    public String getTitle() {
-        return super.getTitle();
-    }
-
-    @Override
-    public String getDescription() {
-        return super.getDescription();
-    }
-
-    @Override
-    public String getDeadline() {
-        return super.getDeadline();
     }
 
     public String getSubject() {
@@ -34,10 +23,12 @@ public class StudyTask extends BaseTask {
 
     @Override
     public String toString() {
-        return super.getId() + ": Study Task; " +
-                "Title: " + super.getTitle() + ", " +
-                "Description: " + super.getDescription() + ", " +
-                "Deadline: " + super.getDeadline() + ", " +
-                "Subject: " + subject;
+        return "Task: " + super.getId() + "\n" +
+                "- Type: Personal Task\n" +
+                "- Title: " + super.getTitle() + "\n" +
+                "- Description: " + super.getDescription() + "\n" +
+                "- Date: " + super.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
+                "- Time: " + super.getTime().format(DateTimeFormatter.ofPattern("HH:mm")) + "\n" +
+                "- Subject: " + subject + "\n";
     }
 }

@@ -1,23 +1,29 @@
 package br.com.ada.adatask.domain;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class BaseTask implements Task {
 
-    private Long id;
-    private static Long nextId = 1L;
+    private Integer id;
+    private static Integer nextId = 1;
     private String title;
     private String description;
-    private String deadline;
+    private LocalDate date;
+    private LocalTime time;
 
-    public BaseTask(String title, String description, String deadline) {
+    public BaseTask(String title, String description, LocalDate date, LocalTime time) {
         this.id = nextId;
         nextId++;
 
         this.title = title;
         this.description = description;
-        this.deadline = deadline;
+        this.date = date;
+        this.time = time;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -29,8 +35,12 @@ public class BaseTask implements Task {
         return description;
     }
 
-    public String getDeadline() {
-        return deadline;
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time;
     }
 
     public void setTitle(String title) {
@@ -41,16 +51,23 @@ public class BaseTask implements Task {
         this.description = description;
     }
 
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    @Override
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     @Override
     public String toString() {
-        return id + ": Regular Task; " +
-                "Title: " + title + ", " +
-                "Description: " + description + ", " +
-                "Deadline: " + deadline;
+        return "Task " + id + "\n" +
+                "- Type: Regular Task\n" +
+                "- Title: " + title + "\n" +
+                "- Description: " + description + "\n" +
+                "- Date: " + date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
+                "- Time: " + time.format(DateTimeFormatter.ofPattern("HH:mm")) + "\n";
     }
 
 }
