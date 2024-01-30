@@ -19,18 +19,39 @@ public class TaskRepository<T extends Task> implements Repository<T>{
     }
 
     @Override
-    public void edit(T task) {
-        // Todo
+    public void update(T task) {
+        Integer index = getIndexById(task.getId());
+        tasks.set(index, task);
     }
 
     @Override
     public void delete(T task) {
+        // todo: check if task exists
         tasks.remove(task);
     }
 
     @Override
     public List<T> getAll() {
         return tasks;
+    }
+
+    @Override
+    public T getById(Integer id) {
+        Integer index = getIndexById(id);
+        if (index != null) {
+            return tasks.get(index);
+        }
+        // Todo: add exception here or in service?
+        return null;
+    }
+
+    public Integer getIndexById(Integer id) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (id.equals(tasks.get(i).getId())) {
+                return i;
+            }
+        }
+        return null;
     }
 
 /*    @Override
