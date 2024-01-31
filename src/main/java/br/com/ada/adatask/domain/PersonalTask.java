@@ -28,7 +28,7 @@ public class PersonalTask extends BaseTask {
 
     @Override
     public String toString() {
-        return "Task: " + super.getId() + "\n" +
+        return "Task " + super.getId() + "\n" +
                 "- Type: Personal Task\n" +
                 "- Title: " + super.getTitle() + "\n" +
                 "- Description: " + super.getDescription() + "\n" +

@@ -26,7 +26,6 @@ public class TaskRepository<T extends Task> implements Repository<T>{
 
     @Override
     public void delete(T task) {
-        // todo: check if task exists
         tasks.remove(task);
     }
 
@@ -41,7 +40,6 @@ public class TaskRepository<T extends Task> implements Repository<T>{
         if (index != null) {
             return tasks.get(index);
         }
-        // Todo: add exception here or in service?
         return null;
     }
 
@@ -53,57 +51,4 @@ public class TaskRepository<T extends Task> implements Repository<T>{
         }
         return null;
     }
-
-/*    @Override
-    public List<T> getByType(T type) {
-
-        for (T task : tasks) {
-
-        }
-        return null;
-    }*/
-
-    /*public Task teste(Long id) {
-
-        for (Task task : tasks) {
-            if (id.equals(task.getId())) {
-                return task;
-            }
-        }
-        return null;
-
-    }
-
-    public Task getById(List<Task> tasks, Long id) {
-        for (Task task : tasks) {
-            if (id.equals(task.getId())) {
-                return task;
-            }
-        }
-        return null;
-    }*/
-
-    /*public <T extends Task> List<T> filterByType(Class<T> taskType) {
-        List<T> filteredTasks = new ArrayList<>();
-
-        for (Task task : tasks) {
-            if (taskType.isInstance(task)) {
-                filteredTasks.add(taskType.cast(task));
-            }
-        }
-
-        return filteredTasks;
-    }*/
-
-/*    public <T extends Task> List<T> filterByType(List<Task> tasks, Class<T> taskType) {
-        List<T> filteredTasks = new ArrayList<>();
-
-        for (Task task : tasks) {
-            if (taskType.isInstance(task)) {
-                filteredTasks.add(taskType.cast(task));
-            }
-        }
-
-        return filteredTasks;
-    }*/
 }

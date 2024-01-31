@@ -23,8 +23,8 @@ public class StudyTask extends BaseTask {
 
     @Override
     public String toString() {
-        return "Task: " + super.getId() + "\n" +
-                "- Type: Personal Task\n" +
+        return "Task " + super.getId() + "\n" +
+                "- Type: Study Task\n" +
                 "- Title: " + super.getTitle() + "\n" +
                 "- Description: " + super.getDescription() + "\n" +
                 "- Date: " + super.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
