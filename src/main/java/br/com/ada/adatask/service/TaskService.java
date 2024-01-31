@@ -12,4 +12,5 @@ public interface TaskService<T> {
     public List<T> getAllTasks();
     public T getTaskById(Integer id);
     public List<T> filterTasksByType(Class<? extends Task> taskType);
+    public List<T> getTasksByDeadline(Integer days);
 }

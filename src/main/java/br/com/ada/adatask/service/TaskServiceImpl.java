@@ -64,6 +64,21 @@ public class TaskServiceImpl<T extends Task> implements TaskService<T> {
         return filteredTasks;
     }
 
+    @Override
+    public List<T> getTasksByDeadline(Integer days) {
+        LocalDate currentDate = LocalDate.now();
+
+        List<T> allTasks = repository.getAll();
+        List<T> filteredTasks = new ArrayList<>();
+
+        for (T task : allTasks) {
+            if (task.getDate().isEqual(currentDate.plusDays(days))) {
+                filteredTasks.add(task);
+            }
+        }
+        return filteredTasks;
+    }
+
     public boolean isInFuture(T newTask) {
         LocalDate date = newTask.getDate();
         LocalTime time = newTask.getTime();

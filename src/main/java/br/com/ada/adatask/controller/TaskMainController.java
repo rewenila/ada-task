@@ -76,6 +76,41 @@ public class TaskMainController {
         }
     }
 
+    public void listTasksByDeadline() {
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("                           List tasks                          ");
+        System.out.println("---------------------------------------------------------------");
+        System.out.println();
+
+        System.out.println("Today");
+        System.out.println("-----");
+        List<Task> todayTasks = service.getTasksByDeadline(0);
+        for (Task task : todayTasks) {
+            System.out.println(task.toString());
+        }
+
+        System.out.println("Tomorrow");
+        System.out.println("--------");
+        List<Task> tomorrowTasks = service.getTasksByDeadline(1);
+        for (Task task : tomorrowTasks) {
+            System.out.println(task.toString());
+        }
+
+        System.out.println("Next week");
+        System.out.println("---------");
+        List<Task> nextWeekTasks = service.getTasksByDeadline(7);
+        for (Task task : nextWeekTasks) {
+            System.out.println(task.toString());
+        }
+
+        System.out.println("Next month");
+        System.out.println("----------");
+        List<Task> nextMonthTasks = service.getTasksByDeadline(30);
+        for (Task task : nextMonthTasks) {
+            System.out.println(task.toString());
+        }
+    }
+
     public void createTask() {
         System.out.println("---------------------------------------------------------------");
         System.out.println("                          Create task                          ");
