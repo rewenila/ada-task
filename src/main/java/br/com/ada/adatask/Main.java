@@ -46,7 +46,7 @@ public class Main {
                 """);
     }
 
-    static void run(TaskMainController delegator) {
+    static void run(TaskMainController controller) {
         Scanner scanner = new Scanner(System.in);
 
         int option;
@@ -72,22 +72,22 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    delegator.listTasks();
+                    controller.listTasks();
                     break;
                 case 2:
-                    delegator.listTasksByType();
+                    controller.listTasksByType();
                     break;
                 case 3:
-                    delegator.listTasksByDeadline();
+                    controller.listTasksByDeadline();
                     break;
                 case 4:
-                    delegator.createTask();
+                    controller.createTask();
                     break;
                 case 5:
-                    delegator.updateTask();
+                    controller.updateTask();
                     break;
                 case 6:
-                    delegator.deleteTask();
+                    controller.deleteTask();
                     break;
                 case 7:
                     System.out.println("Exiting from Ada Task. See you soon!");
