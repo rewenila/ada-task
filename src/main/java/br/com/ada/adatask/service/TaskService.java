@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface TaskService<T> {
 
-    void createTask(T t);
-    void updateTask(T t);
+    boolean createTask(T t);
+    boolean updateTask(T t);
     void deleteTask(Integer id);
     public List<T> getAllTasks();
     public T getTaskById(Integer id);
-    public <T extends Task> List<T> filterTasksByType(Class<T> taskType);
+    public List<T> filterTasksByType(Class<? extends Task> taskType);
 }
