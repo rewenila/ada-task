@@ -1,6 +1,7 @@
 package br.com.ada.adatask.controller;
 
-import br.com.ada.adatask.domain.*;
+import br.com.ada.adatask.domain.PersonalTask;
+import br.com.ada.adatask.domain.Task;
 import br.com.ada.adatask.service.TaskService;
 
 import java.time.LocalDate;
@@ -9,30 +10,29 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-public class BaseTaskController implements TaskController<BaseTask> {
+public class PersonalTaskController implements TaskController<PersonalTask> {
     protected final TaskService<Task> service;
     private final Scanner scanner;
 
-    public BaseTaskController(TaskService<Task> service) {
+    public PersonalTaskController(TaskService<Task> service) {
         this.service = service;
         this.scanner = new Scanner(System.in);
     }
 
     @Override
     public void listTasks() {
-        List<BaseTask> tasks = service.filterTasksByType(BaseTask.class);
+        List<PersonalTask> tasks = service.filterTasksByType(PersonalTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Regular tasks is empty.");
+            System.out.println("The list of Personal tasks is empty.");
             return;
         }
 
-        System.out.println("Listing Regular tasks...\n");
-        for (BaseTask task : tasks) {
+        System.out.println("Listing Personal tasks...\n");
+        for (PersonalTask task : tasks) {
             System.out.println(task.toString());
         }
     }
-
     @Override
     public void createTask() {
         System.out.println("Task title: ");
@@ -68,14 +68,17 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
-        service.createTask(new BaseTask(title, description, date, time));
-        System.out.println("Regular task successfully created.");
+        System.out.println("Task category: ");
+        String category = scanner.nextLine();
+
+        service.createTask(new PersonalTask(title, description, date, time, category));
+        System.out.println("Personal task successfully created.");
 
     }
 
     @Override
     public void updateTask(Integer id) {
-        BaseTask task = (BaseTask) service.getTaskById(id);
+        PersonalTask task = (PersonalTask) service.getTaskById(id);
 
         System.out.println("New task title: ");
         task.setTitle(scanner.nextLine());
@@ -107,8 +110,11 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
+        System.out.println("New task category: ");
+        task.setCategory(scanner.nextLine());
+
         service.updateTask(task);
-        System.out.println("Regular task successfully updated.");
+        System.out.println("Personal task successfully updated.");
     }
 
     @Override
@@ -122,7 +128,7 @@ public class BaseTaskController implements TaskController<BaseTask> {
         }
 
         service.deleteTask(id);
-        System.out.println("Regular task successfully deleted.");
+        System.out.println("Personal task successfully deleted.");
     }
 
 }

@@ -1,11 +1,12 @@
 package br.com.ada.adatask.controller;
 
-public interface TaskController {
+import br.com.ada.adatask.domain.Task;
 
-    void showListTasksMenu();
-    void showCreateTaskMenu();
-    void showUpdateTaskMenu();
-    void showDeleteTaskMenu();
-    void printTasks();
+public interface TaskController<T extends Task> {
+
+    void listTasks();
+    void createTask();
+    void updateTask(Integer id);
+    void deleteTask();
 
 }

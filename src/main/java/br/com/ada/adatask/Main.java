@@ -1,8 +1,6 @@
 package br.com.ada.adatask;
 
-import br.com.ada.adatask.controller.TaskController;
-import br.com.ada.adatask.controller.PersonalTaskController;
-import br.com.ada.adatask.controller.BaseTaskController;
+import br.com.ada.adatask.controller.*;
 import br.com.ada.adatask.domain.*;
 import br.com.ada.adatask.repository.Repository;
 import br.com.ada.adatask.repository.TaskRepository;
@@ -12,35 +10,36 @@ import br.com.ada.adatask.service.TaskServiceImpl;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-
-
     public static void main(String[] args) throws IllegalAccessException {
 
         Scanner scanner = new Scanner(System.in);
+
         Repository<Task> repository = new TaskRepository<>();
         TaskService<Task> service = new TaskServiceImpl<>(repository);
-        TaskController controller = new BaseTaskController(service);
-        //TaskController personalTaskController = new PersonalTaskController(service);
-        //List<TaskController> controllers = Arrays.asList(controller, personalTaskController);
 
-        System.out.println("#############################################");
-        System.out.println("                   ADA TASK                  ");
-        System.out.println("#############################################");
-        System.out.println();
-        System.out.println("Welcome to AdaTask!");
+        TaskController<BaseTask> baseController = new BaseTaskController(service);
+        TaskController<PersonalTask> personalController = new PersonalTaskController(service);
+        TaskController<StudyTask> studyController = new StudyTaskController(service);
+        TaskController<WorkTask> workController = new WorkTaskController(service);
 
-        populateTaskList(service);
-        showMainMenu(controller);
+        TaskControllerDelegator delegator = new TaskControllerDelegator(service, baseController,
+                personalController, studyController, workController, scanner);
 
+        System.out.println("""
+                #############################################
+                                   ADA TASK                 \s
+                #############################################
+                """);
+
+        populate(service);
+        run(delegator);
     }
 
-    static void showMainMenu(TaskController controller) {
+    static void run(TaskControllerDelegator delegator) {
         Scanner scanner = new Scanner(System.in);
 
         int option;
@@ -50,11 +49,12 @@ public class Main {
             System.out.println("                    Main menu                    ");
             System.out.println("#################################################");
             System.out.println();
-            System.out.println("1: List tasks");
-            System.out.println("2: Create new task");
-            System.out.println("3: Update existing task");
-            System.out.println("4: Remove task");
-            System.out.println("5: Exit");
+            System.out.println("1: List all tasks");
+            System.out.println("2: List tasks by type");
+            System.out.println("3: Create new task");
+            System.out.println("4: Update existing task");
+            System.out.println("5: Remove task");
+            System.out.println("6: Exit");
             System.out.println();
             System.out.println("Please inform your option:");
 
@@ -64,18 +64,21 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    controller.showListTasksMenu();
+                    delegator.listTasks();
                     break;
                 case 2:
-                    controller.showCreateTaskMenu();
+                    delegator.listTasksByType();
                     break;
                 case 3:
-                    controller.showUpdateTaskMenu();
+                    delegator.createTask();
                     break;
                 case 4:
-                    controller.showDeleteTaskMenu();
+                    delegator.updateTask();
                     break;
                 case 5:
+                    delegator.deleteTask();
+                    break;
+                case 6:
                     System.out.println("Exiting from Ada Task. See you soon!");
                     break;
                 default:
@@ -87,7 +90,7 @@ public class Main {
 
     }
 
-    public static void populateTaskList(TaskService<Task> service) {
+    public static void populate(TaskService<Task> service) {
         Task baseTask = new BaseTask(
                 "Lunch",
                 "Eat lunch",

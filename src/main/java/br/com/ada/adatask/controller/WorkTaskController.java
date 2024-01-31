@@ -1,6 +1,7 @@
 package br.com.ada.adatask.controller;
 
-import br.com.ada.adatask.domain.*;
+import br.com.ada.adatask.domain.Task;
+import br.com.ada.adatask.domain.WorkTask;
 import br.com.ada.adatask.service.TaskService;
 
 import java.time.LocalDate;
@@ -9,30 +10,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-public class BaseTaskController implements TaskController<BaseTask> {
+
+public class WorkTaskController implements TaskController<WorkTask> {
     protected final TaskService<Task> service;
     private final Scanner scanner;
 
-    public BaseTaskController(TaskService<Task> service) {
+    public WorkTaskController(TaskService<Task> service) {
         this.service = service;
         this.scanner = new Scanner(System.in);
     }
 
     @Override
     public void listTasks() {
-        List<BaseTask> tasks = service.filterTasksByType(BaseTask.class);
+        List<WorkTask> tasks = service.filterTasksByType(WorkTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Regular tasks is empty.");
+            System.out.println("The list of Work tasks is empty.");
             return;
         }
 
-        System.out.println("Listing Regular tasks...\n");
-        for (BaseTask task : tasks) {
+        System.out.println("Listing Work tasks...\n");
+        for (WorkTask task : tasks) {
             System.out.println(task.toString());
         }
     }
-
     @Override
     public void createTask() {
         System.out.println("Task title: ");
@@ -68,14 +69,17 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
-        service.createTask(new BaseTask(title, description, date, time));
-        System.out.println("Regular task successfully created.");
+        System.out.println("Task project: ");
+        String project = scanner.nextLine();
+
+        service.createTask(new WorkTask(title, description, date, time, project));
+        System.out.println("Work task successfully created.");
 
     }
 
     @Override
     public void updateTask(Integer id) {
-        BaseTask task = (BaseTask) service.getTaskById(id);
+        WorkTask task = (WorkTask) service.getTaskById(id);
 
         System.out.println("New task title: ");
         task.setTitle(scanner.nextLine());
@@ -107,8 +111,11 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
+        System.out.println("New task project: ");
+        task.setProject(scanner.nextLine());
+
         service.updateTask(task);
-        System.out.println("Regular task successfully updated.");
+        System.out.println("Work task successfully updated.");
     }
 
     @Override
@@ -122,7 +129,7 @@ public class BaseTaskController implements TaskController<BaseTask> {
         }
 
         service.deleteTask(id);
-        System.out.println("Regular task successfully deleted.");
+        System.out.println("Work task successfully deleted.");
     }
-
 }
+

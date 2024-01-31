@@ -1,6 +1,7 @@
 package br.com.ada.adatask.controller;
 
-import br.com.ada.adatask.domain.*;
+import br.com.ada.adatask.domain.StudyTask;
+import br.com.ada.adatask.domain.Task;
 import br.com.ada.adatask.service.TaskService;
 
 import java.time.LocalDate;
@@ -9,26 +10,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
-public class BaseTaskController implements TaskController<BaseTask> {
+public class StudyTaskController implements TaskController<StudyTask>{
+
     protected final TaskService<Task> service;
     private final Scanner scanner;
 
-    public BaseTaskController(TaskService<Task> service) {
+    public StudyTaskController(TaskService<Task> service) {
         this.service = service;
         this.scanner = new Scanner(System.in);
     }
 
     @Override
     public void listTasks() {
-        List<BaseTask> tasks = service.filterTasksByType(BaseTask.class);
+        List<StudyTask> tasks = service.filterTasksByType(StudyTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Regular tasks is empty.");
+            System.out.println("The list of Study tasks is empty.");
             return;
         }
 
-        System.out.println("Listing Regular tasks...\n");
-        for (BaseTask task : tasks) {
+        System.out.println("Listing Study tasks...\n");
+        for (StudyTask task : tasks) {
             System.out.println(task.toString());
         }
     }
@@ -68,14 +70,17 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
-        service.createTask(new BaseTask(title, description, date, time));
-        System.out.println("Regular task successfully created.");
+        System.out.println("Task subject: ");
+        String subject = scanner.nextLine();
+
+        service.createTask(new StudyTask(title, description, date, time, subject));
+        System.out.println("Study task successfully created.");
 
     }
 
     @Override
     public void updateTask(Integer id) {
-        BaseTask task = (BaseTask) service.getTaskById(id);
+        StudyTask task = (StudyTask) service.getTaskById(id);
 
         System.out.println("New task title: ");
         task.setTitle(scanner.nextLine());
@@ -107,8 +112,11 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
+        System.out.println("New task subject: ");
+        task.setSubject(scanner.nextLine());
+
         service.updateTask(task);
-        System.out.println("Regular task successfully updated.");
+        System.out.println("Study task successfully updated.");
     }
 
     @Override
@@ -122,7 +130,7 @@ public class BaseTaskController implements TaskController<BaseTask> {
         }
 
         service.deleteTask(id);
-        System.out.println("Regular task successfully deleted.");
+        System.out.println("Study task successfully deleted.");
     }
-
 }
+
