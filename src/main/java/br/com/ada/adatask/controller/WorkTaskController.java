@@ -22,15 +22,16 @@ public class WorkTaskController implements TaskController<WorkTask> {
 
     @Override
     public void listTasks() {
-        List<WorkTask> tasks = service.filterTasksByType(WorkTask.class);
+        List<Task> tasks = service.filterTasksByType(WorkTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Work tasks is empty.");
+            System.out.println("The list of Work tasks is empty.\n");
             return;
         }
 
-        System.out.println("Listing Work tasks...\n");
-        for (WorkTask task : tasks) {
+        System.out.println("                         Work task list                        ");
+        System.out.println("---------------------------------------------------------------");
+        for (Task task : tasks) {
             System.out.println(task.toString());
         }
     }
@@ -72,9 +73,11 @@ public class WorkTaskController implements TaskController<WorkTask> {
         System.out.println("Task project: ");
         String project = scanner.nextLine();
 
-        service.createTask(new WorkTask(title, description, date, time, project));
-        System.out.println("Work task successfully created.");
-
+        if (service.createTask(new WorkTask(title, description, date, time, title))) {
+            System.out.println("Work task successfully created.");
+        } else {
+            System.out.println("It was not possible to create the task, please try again.");
+        }
     }
 
     @Override
@@ -114,8 +117,11 @@ public class WorkTaskController implements TaskController<WorkTask> {
         System.out.println("New task project: ");
         task.setProject(scanner.nextLine());
 
-        service.updateTask(task);
-        System.out.println("Work task successfully updated.");
+        if (service.updateTask(task)) {
+            System.out.println("Regular task successfully updated.");
+        } else {
+            System.out.println("It was not possible to update the task.");
+        }
     }
 
     @Override
@@ -132,4 +138,3 @@ public class WorkTaskController implements TaskController<WorkTask> {
         System.out.println("Work task successfully deleted.");
     }
 }
-

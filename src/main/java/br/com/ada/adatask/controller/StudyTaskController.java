@@ -1,5 +1,6 @@
 package br.com.ada.adatask.controller;
 
+import br.com.ada.adatask.domain.PersonalTask;
 import br.com.ada.adatask.domain.StudyTask;
 import br.com.ada.adatask.domain.Task;
 import br.com.ada.adatask.service.TaskService;
@@ -22,15 +23,16 @@ public class StudyTaskController implements TaskController<StudyTask>{
 
     @Override
     public void listTasks() {
-        List<StudyTask> tasks = service.filterTasksByType(StudyTask.class);
+        List<Task> tasks = service.filterTasksByType(StudyTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Study tasks is empty.");
+            System.out.println("The list of Study tasks is empty.\n");
             return;
         }
 
-        System.out.println("Listing Study tasks...\n");
-        for (StudyTask task : tasks) {
+        System.out.println("                        Study task list                        ");
+        System.out.println("---------------------------------------------------------------");
+        for (Task task : tasks) {
             System.out.println(task.toString());
         }
     }
@@ -73,9 +75,11 @@ public class StudyTaskController implements TaskController<StudyTask>{
         System.out.println("Task subject: ");
         String subject = scanner.nextLine();
 
-        service.createTask(new StudyTask(title, description, date, time, subject));
-        System.out.println("Study task successfully created.");
-
+        if (service.createTask(new StudyTask(title, description, date, time, subject))) {
+            System.out.println("Study task successfully created.");
+        } else {
+            System.out.println("It was not possible to create the task, please try again.");
+        }
     }
 
     @Override
@@ -115,8 +119,11 @@ public class StudyTaskController implements TaskController<StudyTask>{
         System.out.println("New task subject: ");
         task.setSubject(scanner.nextLine());
 
-        service.updateTask(task);
-        System.out.println("Study task successfully updated.");
+        if (service.updateTask(task)) {
+            System.out.println("Regular task successfully updated.");
+        } else {
+            System.out.println("It was not possible to update the task.");
+        }
     }
 
     @Override

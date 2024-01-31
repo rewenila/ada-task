@@ -1,5 +1,6 @@
 package br.com.ada.adatask.controller;
 
+import br.com.ada.adatask.domain.BaseTask;
 import br.com.ada.adatask.domain.PersonalTask;
 import br.com.ada.adatask.domain.Task;
 import br.com.ada.adatask.service.TaskService;
@@ -21,15 +22,16 @@ public class PersonalTaskController implements TaskController<PersonalTask> {
 
     @Override
     public void listTasks() {
-        List<PersonalTask> tasks = service.filterTasksByType(PersonalTask.class);
+        List<Task> tasks = service.filterTasksByType(PersonalTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Personal tasks is empty.");
+            System.out.println("The list of Personal tasks is empty.\n");
             return;
         }
 
-        System.out.println("Listing Personal tasks...\n");
-        for (PersonalTask task : tasks) {
+        System.out.println("                       Personal task list                      ");
+        System.out.println("---------------------------------------------------------------");
+        for (Task task : tasks) {
             System.out.println(task.toString());
         }
     }
@@ -71,9 +73,11 @@ public class PersonalTaskController implements TaskController<PersonalTask> {
         System.out.println("Task category: ");
         String category = scanner.nextLine();
 
-        service.createTask(new PersonalTask(title, description, date, time, category));
-        System.out.println("Personal task successfully created.");
-
+        if (service.createTask(new PersonalTask(title, description, date, time, category))) {
+            System.out.println("Personal task successfully created.");
+        } else {
+            System.out.println("It was not possible to create the task, please try again.");
+        }
     }
 
     @Override
@@ -113,8 +117,11 @@ public class PersonalTaskController implements TaskController<PersonalTask> {
         System.out.println("New task category: ");
         task.setCategory(scanner.nextLine());
 
-        service.updateTask(task);
-        System.out.println("Personal task successfully updated.");
+        if (service.updateTask(task)) {
+            System.out.println("Regular task successfully updated.");
+        } else {
+            System.out.println("It was not possible to update the task.");
+        }
     }
 
     @Override
@@ -130,5 +137,4 @@ public class PersonalTaskController implements TaskController<PersonalTask> {
         service.deleteTask(id);
         System.out.println("Personal task successfully deleted.");
     }
-
 }

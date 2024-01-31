@@ -6,7 +6,7 @@ import br.com.ada.adatask.service.TaskService;
 import java.util.List;
 import java.util.Scanner;
 
-public class TaskControllerDelegator {
+public class TaskMainController {
 
     protected final TaskService<Task> service;
     private final TaskController<BaseTask> baseController;
@@ -15,12 +15,12 @@ public class TaskControllerDelegator {
     private final TaskController<WorkTask> workController;
     private final Scanner scanner;
 
-    public TaskControllerDelegator(TaskService<Task> service,
-                                   TaskController<BaseTask> baseController,
-                                   TaskController<PersonalTask> personalController,
-                                   TaskController<StudyTask> studyController,
-                                   TaskController<WorkTask> workController,
-                                   Scanner scanner) {
+    public TaskMainController(TaskService<Task> service,
+                              TaskController<BaseTask> baseController,
+                              TaskController<PersonalTask> personalController,
+                              TaskController<StudyTask> studyController,
+                              TaskController<WorkTask> workController,
+                              Scanner scanner) {
         this.service = service;
         this.baseController = baseController;
         this.personalController = personalController;
@@ -33,22 +33,25 @@ public class TaskControllerDelegator {
         List<Task> allTasks = service.getAllTasks();
 
         if (allTasks.isEmpty()) {
-            System.out.println("The task list is empty.");
+            System.out.println("The task list is empty.\n");
             return;
         }
 
-        System.out.println("Showing all tasks...");
+        System.out.println("                           Task list                           ");
+        System.out.println("---------------------------------------------------------------");
         for (Task task : allTasks) {
             System.out.println(task.toString());
         }
     }
 
     public void listTasksByType() {
-
-        System.out.println("These are the available task types:");
-        System.out.println("1 - Regular, 2 - Personal, 3 - Study, 4 - Work");
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("                           List tasks                          ");
+        System.out.println("---------------------------------------------------------------");
         System.out.println();
-        System.out.println("Please inform the desired type:");
+        System.out.println("These are the available task types:");
+        System.out.println("1 - Regular, 2 - Personal, 3 - Study, 4 - Work\n");
+        System.out.print("Task type: ");
 
         int type = scanner.nextInt(); scanner.nextLine();
 
@@ -74,18 +77,17 @@ public class TaskControllerDelegator {
     }
 
     public void createTask() {
-
-        System.out.println("------------------------------------------------");
-        System.out.println("                 Create task menu               ");
-        System.out.println("------------------------------------------------");
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("                          Create task                          ");
+        System.out.println("---------------------------------------------------------------");
         System.out.println();
         System.out.println("To create a new task, please inform the following:");
 
         boolean isValidType = true;
         do {
-            System.out.println("Task type: ");
             System.out.println("These are the available task types:");
-            System.out.println("1 - Regular, 2 - Personal, 3 - Study, 4 - Work");
+            System.out.println("1 - Regular, 2 - Personal, 3 - Study, 4 - Work\n");
+            System.out.println("Task type: ");
             int type = scanner.nextInt();
             scanner.nextLine();
 
@@ -111,8 +113,11 @@ public class TaskControllerDelegator {
     }
 
     public void updateTask() {
-
-        System.out.println("Please inform the task id: ");
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("                          Update task                          ");
+        System.out.println("---------------------------------------------------------------");
+        System.out.println();
+        System.out.print("Please inform the task id: ");
         int id = scanner.nextInt(); scanner.nextLine();
 
         Task task = service.getTaskById(id);
@@ -138,7 +143,10 @@ public class TaskControllerDelegator {
     }
 
     public void deleteTask() {
+        System.out.println("---------------------------------------------------------------");
+        System.out.println("                          Remove task                          ");
+        System.out.println("---------------------------------------------------------------");
+        System.out.println();
         baseController.deleteTask();
     }
-
 }

@@ -20,15 +20,16 @@ public class BaseTaskController implements TaskController<BaseTask> {
 
     @Override
     public void listTasks() {
-        List<BaseTask> tasks = service.filterTasksByType(BaseTask.class);
+        List<Task> tasks = service.filterTasksByType(BaseTask.class);
 
         if (tasks.isEmpty()) {
-            System.out.println("The list of Regular tasks is empty.");
+            System.out.println("The list of Regular tasks is empty.\n");
             return;
         }
 
-        System.out.println("Listing Regular tasks...\n");
-        for (BaseTask task : tasks) {
+        System.out.println("                        Regular task list                      ");
+        System.out.println("---------------------------------------------------------------");
+        for (Task task : tasks) {
             System.out.println(task.toString());
         }
     }
@@ -68,9 +69,11 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
-        service.createTask(new BaseTask(title, description, date, time));
-        System.out.println("Regular task successfully created.");
-
+        if (service.createTask(new BaseTask(title, description, date, time))) {
+            System.out.println("Regular task successfully created.");
+        } else {
+            System.out.println("It was not possible to create the task, please try again.");
+        }
     }
 
     @Override
@@ -107,8 +110,11 @@ public class BaseTaskController implements TaskController<BaseTask> {
             }
         } while (!isValidTime);
 
-        service.updateTask(task);
-        System.out.println("Regular task successfully updated.");
+        if (service.updateTask(task)) {
+            System.out.println("Regular task successfully updated.");
+        } else {
+            System.out.println("It was not possible to update the task.");
+        }
     }
 
     @Override
@@ -124,5 +130,4 @@ public class BaseTaskController implements TaskController<BaseTask> {
         service.deleteTask(id);
         System.out.println("Regular task successfully deleted.");
     }
-
 }
